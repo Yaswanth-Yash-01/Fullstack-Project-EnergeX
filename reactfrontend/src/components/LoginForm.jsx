@@ -58,7 +58,7 @@ export default function LoginForm() {
   Email:
 </label>
 <input 
-  id="email"                // <-- important
+  id="email"                
   type="email" 
   value={email} 
   onChange={e => setEmail(e.target.value)} 

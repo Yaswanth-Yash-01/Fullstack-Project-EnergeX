@@ -2,7 +2,7 @@
 
 return [
 
-    // Default database connection
+
     'default' => env('DB_CONNECTION', 'mysql'),
 
     'connections' => [
@@ -23,7 +23,7 @@ return [
 
     ],
 
-    // Redis configuration
+
     'redis' => [
         'client' => env('REDIS_CLIENT', 'phpredis'), // or 'predis'
         'default' => [
@@ -34,7 +34,7 @@ return [
         ],
     ],
 
-    // Migrations table
+
     'migrations' => 'migrations',
 
 ];
