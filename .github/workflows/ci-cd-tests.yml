@@ -31,48 +31,45 @@ jobs:
           - 6379:6379
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # ----------------- Lumen Backend Tests -----------------
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.2'
-        extensions: mbstring, redis, pdo_mysql
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mbstring, redis, pdo_mysql
 
-    - name: Install Lumen dependencies
-      run: composer install --no-progress --no-suggest --prefer-dist
-      working-directory: backend/lumen
+      - name: Install Lumen dependencies
+        run: composer install --no-progress --no-suggest --prefer-dist
+        working-directory: backend/lumen-backend
 
-    - name: Run Lumen tests
-      run: php artisan test
-      working-directory: backend/lumen
+      - name: Run Lumen tests
+        run: php artisan test
+        working-directory: backend/lumen-backend
 
-    # ----------------- Node Backend Tests -----------------
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
 
-    - name: Install Node dependencies
-      run: npm install
-      working-directory: backend/node
+      - name: Install Node dependencies
+        run: npm install
+        working-directory: node-cache
 
-    - name: Run Node tests
-      run: npm test
-      working-directory: backend/node
+      - name: Run Node tests
+        run: npm test
+        working-directory: backend/node-cache
 
-    # ----------------- Frontend Tests (Optional) -----------------
-    - name: Set up Frontend Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: Set up Frontend Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
 
-    - name: Install Frontend dependencies
-      run: npm install
-      working-directory: frontend
+      - name: Install Frontend dependencies
+        run: npm install
+        working-directory: reactfrontend
 
-    - name: Run Frontend tests
-      run: npm test
-      working-directory: frontend
+      - name: Run Frontend tests
+        run: npm test
+        working-directory: reactfrontend
