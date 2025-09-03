@@ -51,21 +51,28 @@ export default function LoginForm() {
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
 
         <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Email:</label>
-          <input 
-            type="email" 
-            value={email} 
-            onChange={e => setEmail(e.target.value)} 
-            required
-            style={{
-              width: '100%',
-              padding: '10px',
-              borderRadius: '5px',
-              border: '1px solid #ccc',
-              outline: 'none',
-              boxSizing: 'border-box'
-            }}
-          />
+         <label 
+  htmlFor="email" 
+  style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}
+>
+  Email:
+</label>
+<input 
+  id="email"                // <-- important
+  type="email" 
+  value={email} 
+  onChange={e => setEmail(e.target.value)} 
+  required
+  style={{
+    width: '100%',
+    padding: '10px',
+    borderRadius: '5px',
+    border: '1px solid #ccc',
+    outline: 'none',
+    boxSizing: 'border-box'
+  }}
+/>
+
         </div>
 
         <div style={{ marginBottom: '30px' }}>

@@ -3,9 +3,10 @@
 namespace Tests;
 
 use Laravel\Lumen\Testing\TestCase as BaseTestCase;
-
+use Laravel\Lumen\Testing\DatabaseMigrations;
 abstract class TestCase extends BaseTestCase
 {
+    use DatabaseMigrations;
     /**
      * Creates the application.
      *
@@ -13,6 +14,6 @@ abstract class TestCase extends BaseTestCase
      */
     public function createApplication()
     {
-        return require __DIR__.'/../bootstrap/app.php';
+        return require __DIR__ . '/../bootstrap/app.php';
     }
 }

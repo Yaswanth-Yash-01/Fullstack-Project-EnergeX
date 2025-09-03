@@ -4,7 +4,7 @@
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "esModuleInterop": true,
-    "types": ["node","jest"],        // <-- add this line
+    "types": ["node","jest"],        
     "outDir": "dist",
     "strict": true
   }

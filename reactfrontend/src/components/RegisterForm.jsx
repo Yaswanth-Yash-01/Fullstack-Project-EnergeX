@@ -47,21 +47,20 @@ export default function RegisterForm() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={formStyle}
-    >
+    <form onSubmit={handleSubmit} style={formStyle}>
       <input
         placeholder="Name"
         value={name}
         onChange={e => setName(e.target.value)}
         style={inputStyle}
+        data-testid="name-input"
       />
       <input
         placeholder="Email"
         value={email}
         onChange={e => setEmail(e.target.value)}
         style={inputStyle}
+        data-testid="email-input"
       />
       <input
         placeholder="Password"
@@ -69,12 +68,14 @@ export default function RegisterForm() {
         value={password}
         onChange={e => setPassword(e.target.value)}
         style={inputStyle}
+        data-testid="password-input"
       />
       <button
         type="submit"
         style={buttonStyle}
         onMouseOver={e => (e.currentTarget.style.backgroundColor = buttonHoverStyle.backgroundColor)}
         onMouseOut={e => (e.currentTarget.style.backgroundColor = buttonStyle.backgroundColor)}
+        data-testid="register-button"
       >
         Register
       </button>
