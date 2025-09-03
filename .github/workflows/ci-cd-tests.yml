@@ -1,15 +1,13 @@
-name: Fullstack Auto Tests
+name: CI/CD Tests
 
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
   pull_request:
-    branches:
-      - main
+    branches: ["main"]
 
 jobs:
-  run-tests:
+  build:
     runs-on: ubuntu-latest
 
     services:
@@ -17,14 +15,11 @@ jobs:
         image: mysql:8
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: lumen_db
+          MYSQL_DATABASE: test_db
         ports:
           - 3306:3306
         options: >-
-          --health-cmd "mysqladmin ping --silent"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 3
+          --health-cmd="mysqladmin ping --silent"
       redis:
         image: redis:latest
         ports:
@@ -55,7 +50,7 @@ jobs:
 
       - name: Install Node dependencies
         run: npm install
-        working-directory: node-cache
+        working-directory: backend/node-cache
 
       - name: Run Node tests
         run: npm test
@@ -68,8 +63,8 @@ jobs:
 
       - name: Install Frontend dependencies
         run: npm install
-        working-directory: reactfrontend
+        working-directory: frontend/reactfrontend
 
       - name: Run Frontend tests
         run: npm test
-        working-directory: reactfrontend
+        working-directory: frontend/reactfrontend
