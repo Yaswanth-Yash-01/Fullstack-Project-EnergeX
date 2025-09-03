@@ -1,0 +1,63 @@
+services:
+  lumen:
+    build:
+      context: ./lumen-backend  
+    container_name: lumen-backend
+    restart: always
+    volumes:
+      - ./lumen-backend:/var/www  
+    ports:
+      - "8000:9000"      
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - app-network
+    env_file:
+      - ./lumen-backend/.env
+
+  node:
+    build:
+      context: ./node-cache   
+    container_name: node-cache
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./node-cache:/usr/src/app
+    depends_on:
+      - lumen
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: EnergeX
+      MYSQL_USER: yaswanth
+      MYSQL_PASSWORD: secret
+    ports:
+      - "3307:3306" 
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+
+  redis:
+    image: redis:7
+    container_name: redis-cache
+    restart: always
+    ports:
+      - "6380:6379"  
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
