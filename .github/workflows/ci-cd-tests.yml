@@ -39,6 +39,9 @@ jobs:
         run: composer install --no-progress --no-suggest --prefer-dist
         working-directory: backend/lumen-backend
 
+      - name: Copy testing env
+        run: cp backend/lumen-backend/.env.testing backend/lumen-backend/.env
+
       - name: Run Lumen migrations
         run: php artisan migrate:fresh --force --env=testing
         working-directory: backend/lumen-backend
