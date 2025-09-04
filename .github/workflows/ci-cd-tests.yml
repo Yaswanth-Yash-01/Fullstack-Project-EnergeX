@@ -42,8 +42,12 @@ jobs:
       - name: Copy testing env
         run: cp backend/lumen-backend/.env.testing backend/lumen-backend/.env
 
+      - name: Clear Lumen cache
+        run: php artisan cache:clear
+        working-directory: backend/lumen-backend
+
       - name: Run Lumen migrations
-        run: php artisan migrate:fresh --force --env=testing
+        run: php artisan migrate:fresh --forceh
         working-directory: backend/lumen-backend
 
       - name: Generate JWT secret
