@@ -40,7 +40,7 @@ jobs:
         working-directory: backend/lumen-backend
 
       - name: Run Lumen migrations
-        run: php artisan migrate --env=testing
+        run: php artisan migrate:fresh --force --env=testing
         working-directory: backend/lumen-backend
 
       - name: Generate JWT secret
