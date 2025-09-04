@@ -101,6 +101,15 @@ $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->middleware([
     App\Http\Middleware\CorsMiddleware::class
 ]);
+$app->singleton('redis', function ($app) {
+    return new \Illuminate\Redis\RedisManager($app, 'predis', [
+        'default' => [
+            'host' => env('REDIS_HOST', '127.0.0.1'),
+            'port' => env('REDIS_PORT', 6379),
+        ],
+    ]);
+});
+
 
 // Register route middleware
 $app->routeMiddleware([
