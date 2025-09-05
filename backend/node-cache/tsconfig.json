@@ -3,6 +3,7 @@
     "target": "ES2020",
     "module": "nodenext",
     "moduleResolution": "nodenext",
+    "isolatedModules": true,
     "esModuleInterop": true,
     "types": ["node","jest"],        
     "outDir": "dist",
