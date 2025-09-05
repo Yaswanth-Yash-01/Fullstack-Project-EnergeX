@@ -66,10 +66,11 @@ jobs:
       - name: Install Node dependencies
         run: npm install
         working-directory: backend/node-cache
+
       - name: Create MySQL test user
-       run: |
-        mysql -uroot -proot -e "CREATE USER 'yaswanth'@'%' IDENTIFIED BY 'password';"
-        mysql -uroot -proot -e "GRANT ALL PRIVILEGES ON test_db.* TO 'yaswanth'@'%';"
+        run: |
+          mysql -uroot -proot -e "CREATE USER 'yaswanth'@'%' IDENTIFIED BY 'password';"
+          mysql -uroot -proot -e "GRANT ALL PRIVILEGES ON test_db.* TO 'yaswanth'@'%';"
 
       - name: Run Node tests
         run: npm test
