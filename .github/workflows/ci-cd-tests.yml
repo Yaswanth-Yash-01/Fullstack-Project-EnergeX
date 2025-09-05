@@ -50,13 +50,15 @@ jobs:
       - name: Wait for MySQL
         run: |
           for i in {1..30}; do
-            if mysqladmin ping -h127.0.0.1 -uroot -proot --silent; then
+            if mysqladmin ping -h mysql -uroot -psecret --silent; then
               echo "MySQL is up!"
-              break
+              exit 0
             fi
             echo "Waiting for MySQL... ($i)"
             sleep 2
           done
+          echo "MySQL did not start in time"
+          exit 1
 
       - name: Run Lumen migrations
         run: php artisan migrate:fresh --force --env=testing
