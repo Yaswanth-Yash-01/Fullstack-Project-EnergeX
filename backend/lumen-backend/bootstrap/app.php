@@ -115,6 +115,7 @@ $app->singleton('redis', function ($app) {
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
 ]);
+$app->register(Illuminate\Redis\RedisServiceProvider::class);
 
 $app->register(Illuminate\Validation\ValidationServiceProvider::class);
 

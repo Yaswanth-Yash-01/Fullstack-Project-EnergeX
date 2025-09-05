@@ -378,17 +378,17 @@
         },
         {
             "name": "illuminate/redis",
-            "version": "v12.28.0",
-            "version_normalized": "12.28.0.0",
+            "version": "v12.28.1",
+            "version_normalized": "12.28.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/redis.git",
-                "reference": "07db4f0edf1ee6a7f4311e0d00cd8d2fb01b35fb"
+                "reference": "1b96c2b34ec2bc794b32469b357357c57fb54150"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/redis/zipball/07db4f0edf1ee6a7f4311e0d00cd8d2fb01b35fb",
-                "reference": "07db4f0edf1ee6a7f4311e0d00cd8d2fb01b35fb",
+                "url": "https://api.github.com/repos/illuminate/redis/zipball/1b96c2b34ec2bc794b32469b357357c57fb54150",
+                "reference": "1b96c2b34ec2bc794b32469b357357c57fb54150",
                 "shasum": ""
             },
             "require": {
@@ -402,7 +402,7 @@
                 "ext-redis": "Required to use the phpredis connector (^4.0|^5.0|^6.0).",
                 "predis/predis": "Required to use the predis connector (^2.3|^3.0)."
             },
-            "time": "2025-08-28T14:22:21+00:00",
+            "time": "2025-09-04T01:27:58+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
