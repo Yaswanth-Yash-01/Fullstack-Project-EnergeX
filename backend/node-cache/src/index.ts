@@ -1,7 +1,7 @@
 // src/index.ts
 import express, { Request, Response } from 'express';
 import { redisClient, connectRedis } from './redis';
-import { sequelize, testConnection } from './db';
+import { sequelize } from './db';
 import { Post } from './models/Post';
 
 const app = express();
@@ -55,7 +55,7 @@ export default app;
 if (require.main === module) {
   (async () => {
     try {
-      await testConnection();   
+      // await testConnection();   
       await connectRedis();     
       app.listen(PORT, () =>
         console.log(`Server running at http://localhost:${PORT}`)
