@@ -47,6 +47,16 @@ jobs:
       - name: Ensure Predis is installed
         run: composer require predis/predis --no-interaction
         working-directory: backend/lumen-backend
+      - name: Wait for MySQL
+        run: |
+          for i in {1..30}; do
+            if mysqladmin ping -h127.0.0.1 -uroot -proot --silent; then
+              echo "MySQL is up!"
+              break
+            fi
+            echo "Waiting for MySQL... ($i)"
+            sleep 2
+          done
 
       - name: Run Lumen migrations
         run: php artisan migrate:fresh --force --env=testing
