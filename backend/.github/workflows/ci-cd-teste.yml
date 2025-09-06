@@ -21,7 +21,10 @@ jobs:
         ports:
           - 3307:3306
         options: >-
-          --health-cmd="mysqladmin ping --silent"
+          --health-cmd="mysqladmin ping -h localhost -psecret"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
       redis:
         image: redis:latest
         ports:
@@ -49,16 +52,16 @@ jobs:
         working-directory: backend/lumen-backend
       - name: Wait for MySQL
         run: |
+          run: |
+          echo "Waiting for MySQL to be ready..."
           for i in {1..30}; do
-            if mysqladmin ping -hmysql -uroot -psecret --silent; then
-              echo "MySQL is up!"
-              exit 0
+            if mysql -h 127.0.0.1 -uroot -psecret -e "SELECT 1;" > /dev/null 2>&1; then
+              echo "MySQL is ready!"
+              break
             fi
             echo "Waiting for MySQL... ($i)"
-            sleep 2
+            sleep 5
           done
-          echo "MySQL did not start in time"
-          exit 1
 
       - name: Run Lumen migrations
         run: php artisan migrate:fresh --force --env=testing
