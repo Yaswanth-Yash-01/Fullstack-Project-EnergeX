@@ -1,0 +1,105 @@
+name: CI/CD Tests
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: secret
+          MYSQL_DATABASE: EnergeX
+          MYSQL_USER: yaswanth
+          MYSQL_PASSWORD: secret
+        ports:
+          - 3307:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+      redis:
+        image: redis:latest
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mbstring, pdo_mysql
+
+      - name: Install Lumen dependencies
+        run: composer install --no-progress --no-suggest --prefer-dist
+        working-directory: backend/lumen-backend
+
+      - name: Copy testing environment
+        run: cp backend/lumen-backend/.env.testing backend/lumen-backend/.env
+
+      - name: Ensure Predis is installed
+        run: composer require predis/predis --no-interaction
+        working-directory: backend/lumen-backend
+      - name: Wait for MySQL
+        run: |
+          for i in {1..30}; do
+            if mysqladmin ping -hmysql -uroot -psecret --silent; then
+              echo "MySQL is up!"
+              exit 0
+            fi
+            echo "Waiting for MySQL... ($i)"
+            sleep 2
+          done
+          echo "MySQL did not start in time"
+          exit 1
+
+      - name: Run Lumen migrations
+        run: php artisan migrate:fresh --force --env=testing
+        working-directory: backend/lumen-backend
+
+      - name: Generate JWT secret
+        run: php artisan jwt:secret --force
+        working-directory: backend/lumen-backend
+
+      - name: Run Lumen tests
+        run: ./vendor/bin/phpunit --testdox
+        working-directory: backend/lumen-backend
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install Node dependencies
+        run: npm install
+        working-directory: backend/node-cache
+
+      - name: Create MySQL test user
+        run: |
+          mysql -uroot -proot -e "CREATE USER IF NOT EXISTS 'yaswanth'@'%' IDENTIFIED BY 'secret';"
+          mysql -uroot -proot -e "GRANT ALL PRIVILEGES ON test_db.* TO 'yaswanth'@'%';"
+          mysql -uroot -proot -e "FLUSH PRIVILEGES;"
+
+      - name: Run Node tests
+        run: npm test
+        working-directory: backend/node-cache
+
+      - name: Set up Frontend Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install Frontend dependencies
+        run: npm install
+        working-directory: frontend/reactfrontend
+
+      - name: Run Frontend tests
+        run: npm test
+        working-directory: frontend/reactfrontend
