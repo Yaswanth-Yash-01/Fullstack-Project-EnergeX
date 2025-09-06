@@ -19,7 +19,7 @@ jobs:
           MYSQL_USER: yaswanth
           MYSQL_PASSWORD: secret
         ports:
-          - 3307:3306
+          - 3306:3306
         options: >-
           --health-cmd="mysqladmin ping -h localhost -psecret"
           --health-interval=10s
