@@ -1,3 +1,4 @@
+
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
@@ -30,6 +31,9 @@ describe('LoginForm', () => {
     fireEvent.change(screen.getByLabelText(/password/i), { target: { value: 'password123' } });
     fireEvent.click(screen.getByRole('button', { name: /login/i }));
 
-    expect(mockLogin).toHaveBeenCalled();
+    expect(mockLogin).toHaveBeenCalledWith({
+      email: 'test@example.com',
+      password: 'password123',
+    });
   });
 });

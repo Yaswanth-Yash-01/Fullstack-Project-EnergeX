@@ -1,8 +1,9 @@
+
 import { useState } from 'react';
 import api from '../api/axios'; 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
-export default function LoginForm() {
+export default function LoginForm({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -11,6 +12,11 @@ export default function LoginForm() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
+
+    if (onLogin) {
+      onLogin({ email, password });
+      return;
+    }
 
     try {
       const response = await api.post('/login', { email, password });
@@ -51,36 +57,17 @@ export default function LoginForm() {
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
 
         <div style={{ marginBottom: '20px' }}>
-         <label 
-  htmlFor="email" 
-  style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}
->
-  Email:
-</label>
-<input 
-  id="email"                
-  type="email" 
-  value={email} 
-  onChange={e => setEmail(e.target.value)} 
-  required
-  style={{
-    width: '100%',
-    padding: '10px',
-    borderRadius: '5px',
-    border: '1px solid #ccc',
-    outline: 'none',
-    boxSizing: 'border-box'
-  }}
-/>
-
-        </div>
-
-        <div style={{ marginBottom: '30px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Password:</label>
+          <label 
+            htmlFor="email" 
+            style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}
+          >
+            Email:
+          </label>
           <input 
-            type="password" 
-            value={password} 
-            onChange={e => setPassword(e.target.value)} 
+            id="email"                
+            type="email" 
+            value={email} 
+            onChange={e => setEmail(e.target.value)} 
             required
             style={{
               width: '100%',
@@ -89,6 +76,28 @@ export default function LoginForm() {
               border: '1px solid #ccc',
               outline: 'none',
               boxSizing: 'border-box'
+            }}
+          />
+        </div>
+
+        <div style={{ marginBottom: "30px" }}>
+          <label htmlFor="password" style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>
+            Password:
+          </label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+            style={{
+              width: "100%",
+              padding: "10px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+              outline: "none",
+              boxSizing: "border-box",
             }}
           />
         </div>
@@ -111,7 +120,16 @@ export default function LoginForm() {
         >
           Login
         </button>
+
+      
+        <p style={{ textAlign: 'center', marginTop: '20px' }}>
+          Don't have an account?{' '}
+          <Link to="/register" style={{ color: '#2980b9', textDecoration: 'none', fontWeight: 'bold' }}>
+            Register
+          </Link>
+        </p>
       </form>
     </div>
   );
 }
+

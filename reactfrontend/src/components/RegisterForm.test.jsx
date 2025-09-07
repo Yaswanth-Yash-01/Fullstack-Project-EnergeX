@@ -7,7 +7,9 @@ import api from '../api/axios';
 import '@testing-library/jest-dom';
 
 vi.mock('../api/axios');
-
+beforeAll(() => {
+  window.alert = vi.fn();
+});
 describe('RegisterForm', () => {
   beforeEach(() => {
     vi.clearAllMocks();

@@ -47,4 +47,18 @@ class PostController extends BaseController
 
         return response()->json($post, 201);
     }
+    public function show($id)
+    {
+        $user = Auth::user();
+
+        $post = Post::where('id', $id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        if (!$post) {
+            return response()->json(['message' => 'Post not found'], 404);
+        }
+
+        return response()->json($post);
+    }
 }

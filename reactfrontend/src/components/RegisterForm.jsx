@@ -1,15 +1,25 @@
+
+
 import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import api from '../api/axios';
 
 export default function RegisterForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async e => {
     e.preventDefault();
-    await api.post('/register', { name, email, password });
-    alert('Registered! Please login.');
+    try {
+      await api.post('/register', { name, email, password });
+      alert('Registered! Please login.');
+      navigate('/'); 
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || 'Registration failed');
+    }
   };
 
   const formStyle = {
@@ -48,6 +58,7 @@ export default function RegisterForm() {
 
   return (
     <form onSubmit={handleSubmit} style={formStyle}>
+      <h2 style={{ textAlign: 'center', marginBottom: '30px', color: '#2c3e50' }}>Register</h2>
       <input
         placeholder="Name"
         value={name}
@@ -79,6 +90,14 @@ export default function RegisterForm() {
       >
         Register
       </button>
+
+
+      <p style={{ textAlign: 'center', marginTop: '20px' }}>
+        Have an account?{' '}
+        <Link to="/" style={{ color: '#2980b9', textDecoration: 'none', fontWeight: 'bold' }}>
+          Login
+        </Link>
+      </p>
     </form>
   );
 }
