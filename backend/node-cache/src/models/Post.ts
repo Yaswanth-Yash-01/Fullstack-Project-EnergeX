@@ -1,8 +1,8 @@
-// src/models/Post.ts
+
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../db';
 
-// Define attributes for Post
+
 interface PostAttributes {
   id: number;
   title: string;
@@ -11,10 +11,10 @@ interface PostAttributes {
   updated_at?: Date;
 }
 
-// Fields optional during creation
+
 interface PostCreationAttributes extends Optional<PostAttributes, 'id'> {}
 
-// Define Post model
+
 export class Post extends Model<PostAttributes, PostCreationAttributes>
   implements PostAttributes {
   public id!: number;
