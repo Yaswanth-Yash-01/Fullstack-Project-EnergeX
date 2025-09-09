@@ -1,4 +1,4 @@
-// src/index.ts
+
 import express, { Request, Response } from 'express';
 import cors from 'cors'; 
 import { redisClient, connectRedis } from './redis';
@@ -16,7 +16,6 @@ app.use(cors({
 
 app.use(express.json());
 
-// --- Endpoints ---
 app.get('/cache/posts', async (req: Request, res: Response) => {
   try {
     const cachedPosts = await redisClient.get('posts');
