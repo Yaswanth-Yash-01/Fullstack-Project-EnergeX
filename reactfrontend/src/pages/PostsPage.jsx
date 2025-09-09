@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
-
+import postApi from '../api/postApi';
 export default function PostsPage() {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    api.get('/posts')
+    postApi.get('/posts')
       .then(res => setPosts(res.data))
       .catch(err => setError(err.response?.data?.message || 'Failed to fetch posts'));
   }, []);
@@ -52,12 +52,15 @@ export default function PostsPage() {
 
       <div style={{ display: 'grid', gap: '20px', marginTop: '20px' }}>
         {posts.map(p => (
-          <div key={p.id} style={{
+          <div key={p.id}
+          onClick={() => navigate(`/posts/${p.id}`)}
+           style={{
             border: '1px solid #ddd',
             borderRadius: '10px',
             padding: '20px',
             backgroundColor: '#f9f9f9',
-            boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
+            boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+            cursor: 'pointer'
           }}>
             <h3 style={{ marginBottom: '10px', color: '#34495e' }}>{p.title}</h3>
             <p style={{ color: '#555' }}>{p.content}</p>

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginForm from './components/LoginForm';
 import PostsPage from './pages/PostsPage';
-
+import PostDetail from './pages/Postdetail';
 import CreatePost from './pages/CreatePosts';
 import ProtectedRoute from './route/ProtectedRoute';
 import PublicRoute from './route/PublicRoute';
@@ -38,6 +38,12 @@ const App = () => {
         <Route path="/createpost" element={
           <ProtectedRoute>
             <CreatePost />
+          </ProtectedRoute>
+        } />
+
+         <Route path="/posts/:id" element={
+          <ProtectedRoute>
+            <PostDetail />
           </ProtectedRoute>
         } />
       </Routes>
