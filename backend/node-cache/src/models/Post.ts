@@ -42,28 +42,3 @@ Post.init(
 );
 
 
-
-// // src/models/Post.ts
-// const { DataTypes, Model } = require('sequelize');
-// const { sequelize } = require('../db'); 
-
-// export class Post extends Model {}
-
-// Post.init(
-//   {
-//     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-//     title: { type: DataTypes.STRING, allowNull: false },
-//     content: { type: DataTypes.TEXT, allowNull: false },
-//     created_at: { type: DataTypes.DATE, allowNull: true },
-//     updated_at: { type: DataTypes.DATE, allowNull: true },
-//   },
-//   { 
-//     sequelize,
-//     modelName: 'post',
-//     tableName: 'posts',
-//     timestamps: true,
-//     underscored: true,   
-//   }
-// );
-
-// module.exports = { Post };

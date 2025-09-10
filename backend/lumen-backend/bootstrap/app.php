@@ -116,6 +116,9 @@ $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
 ]);
 $app->register(Illuminate\Redis\RedisServiceProvider::class);
+$app->routeMiddleware([
+    'role' => App\Http\Middleware\RoleMiddleware::class,
+]);
 
 $app->register(Illuminate\Validation\ValidationServiceProvider::class);
 

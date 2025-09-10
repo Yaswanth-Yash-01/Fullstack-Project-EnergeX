@@ -13,10 +13,7 @@ class PostController extends BaseController
 
     public function index(Request $request)
     {
-        $user = Auth::user();
-
-        $posts = Post::where('user_id', $user->id)->get();
-
+        $posts = Post::with('user:id,name')->get();
         return response()->json($posts);
     }
 
@@ -24,7 +21,6 @@ class PostController extends BaseController
     public function store(Request $request)
     {
         $user = Auth::user();
-
 
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
@@ -47,13 +43,11 @@ class PostController extends BaseController
 
         return response()->json($post, 201);
     }
+
+
     public function show($id)
     {
-        $user = Auth::user();
-
-        $post = Post::where('id', $id)
-            ->where('user_id', $user->id)
-            ->first();
+        $post = Post::find($id);
 
         if (!$post) {
             return response()->json(['message' => 'Post not found'], 404);
@@ -61,4 +55,33 @@ class PostController extends BaseController
 
         return response()->json($post);
     }
+
+
+    public function update(Request $request, $id)
+    {
+        $post = Post::find($id);
+
+        if (!$post) {
+            return response()->json(['error' => 'Post not found'], 404);
+        }
+
+        $post->update($request->only(['title', 'content']));
+
+        return response()->json(['message' => 'Post updated successfully', 'post' => $post]);
+    }
+
+    public function destroy($id)
+    {
+        $post = Post::find($id);
+
+        if (!$post) {
+            return response()->json(['error' => 'Post not found'], 404);
+        }
+
+        $post->delete();
+
+        return response()->json(['message' => 'Post deleted successfully']);
+    }
 }
+
+

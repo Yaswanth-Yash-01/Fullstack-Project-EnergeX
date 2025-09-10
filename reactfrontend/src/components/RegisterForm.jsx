@@ -9,11 +9,12 @@ export default function RegisterForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+   const [isAdmin, setIsAdmin] = useState(false);
 
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await api.post('/register', { name, email, password });
+      await api.post('/register', { name, email, password,role :isAdmin? 'admin': 'user' });
       alert('Registered! Please login.');
       navigate('/'); 
     } catch (err) {
@@ -81,6 +82,10 @@ export default function RegisterForm() {
         style={inputStyle}
         data-testid="password-input"
       />
+       <label>
+        <input type="checkbox" checked={isAdmin} onChange={e => setIsAdmin(e.target.checked)} />
+        Register as Admin
+      </label>
       <button
         type="submit"
         style={buttonStyle}

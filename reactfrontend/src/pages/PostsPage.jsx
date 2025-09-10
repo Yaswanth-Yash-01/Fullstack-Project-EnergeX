@@ -51,21 +51,23 @@ export default function PostsPage() {
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       <div style={{ display: 'grid', gap: '20px', marginTop: '20px' }}>
-        {posts.map(p => (
-          <div key={p.id}
-          onClick={() => navigate(`/posts/${p.id}`)}
-           style={{
-            border: '1px solid #ddd',
-            borderRadius: '10px',
-            padding: '20px',
-            backgroundColor: '#f9f9f9',
-            boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-            cursor: 'pointer'
-          }}>
-            <h3 style={{ marginBottom: '10px', color: '#34495e' }}>{p.title}</h3>
-            <p style={{ color: '#555' }}>{p.content}</p>
-          </div>
-        ))}
+     {[...posts].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map(p => (
+  <div 
+    key={p.id}
+    onClick={() => navigate(`/posts/${p.id}`)}
+    style={{
+      border: '1px solid #ddd',
+      borderRadius: '10px',
+      padding: '20px',
+      backgroundColor: '#f9f9f9',
+      boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+      cursor: 'pointer'
+    }}
+  >
+    <h3 style={{ marginBottom: '10px', color: '#34495e' }}>{p.title}</h3>
+    <p style={{ color: '#555' }}>{p.content}</p>
+  </div>
+))}
       </div>
     </div>
   );

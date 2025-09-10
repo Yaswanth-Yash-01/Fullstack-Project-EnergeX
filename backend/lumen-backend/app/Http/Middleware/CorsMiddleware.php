@@ -14,7 +14,7 @@ class CorsMiddleware
             'Access-Control-Allow-Headers' => 'Content-Type, Authorization, X-Requested-With'
         ];
 
-        // Handle preflight requests
+
         if ($request->getMethod() === 'OPTIONS') {
             return response()->json('OK', 200, $headers);
         }

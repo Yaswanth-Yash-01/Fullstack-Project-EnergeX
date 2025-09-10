@@ -21,6 +21,7 @@ export default function LoginForm({ onLogin }) {
     try {
       const response = await api.post('/login', { email, password });
       localStorage.setItem('jwt', response.data.token);
+    localStorage.setItem('role', response.data.user.role);
       console.log('JWT Token:', localStorage.getItem('jwt'));
       alert('Login successful!');
       navigate('/posts');
